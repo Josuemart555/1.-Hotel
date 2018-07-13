@@ -1,0 +1,117 @@
+<div class="container main-container">
+
+  <div class="d-flex justify-content-between">
+    <h2>Habitación</h2>
+    <div class="d-flex justify-content-between">
+      <button class="btn btn-outline-danger"
+              type="button" [routerLink]="['/habitaciones']">
+        <i class="fas fa-ban" style="margin-right: 5px;"></i> Cancelar
+      </button>
+    </div>
+  </div>
+
+
+  <hr>
+
+  <div class="row">
+
+    <div class="col-md-5">
+
+      <form (ngSubmit)="guardarHabitaciones()" #forma="ngForm">
+
+        <div class="form-group">
+          <label>Nombre</label>
+          <select class="form-control" [(ngModel)]="habitacion.tipoHabitacion" name="tipoHabitacion">
+            <option *ngFor="let tipoHabitacion of _tHS.listaTipoHabitacion" [value]="tipoHabitacion.nombre">{{ tipoHabitacion.nombre }}</option>
+          </select>
+        </div>
+
+        <div class="form-group"
+             [ngClass]="{ 'has-danger' : opcionesCama.errors?.minlength || opcionesCama.errors?.required && opcionesCama.touched}">
+          <label>Descripción</label>
+          <input [(ngModel)]="habitacion.opcionesCama"
+                 type="text" name="opcionesCama"
+                 class="form-control" pattern="^[a-zA-Z_-]+(?:\s+[a-zA-Z_-]+)*$"
+                 placeholder="Opción de Cama" autocomplete="off"
+                 required minlength="4" #opcionesCama="ngModel">
+                 <br>
+                 <div *ngIf="opcionesCama.errors?.required && opcionesCama.touched"
+                      class="alert alert-danger form-control-feadback"
+                      role="alert">
+                  <strong>Este Campo es Requerido</strong>
+                </div>
+                <div *ngIf="opcionesCama.errors?.minlength"
+                     class="alert alert-danger form-control-feadback"
+                     role="alert">
+                 <strong>Minimo {{ opcionesCama.errors.minlength.requiredLength }} caracteres</strong>
+               </div>
+
+        </div>
+
+        <div class="form-group"
+             [ngClass]="{ 'has-danger' : precio.errors?.minlength || precio.errors?.required && precio.touched }">
+          <label>Precio</label>
+          <div class="input-group">
+            <span class="input-group-addon">$</span>
+            <input [(ngModel)]="habitacion.precio" step="1"
+                   type="number" name="precio" min="0"
+                   class="form-control"  autocomplete="off"
+                   required minlength="1" #precio="ngModel">
+           </div>
+                 <br>
+                 <div *ngIf="precio.errors?.required && precio.touched"
+                      class="alert alert-danger form-control-feadback"
+                      role="alert">
+                  <strong>Este Campo es Requerido</strong>
+                </div>
+                <div *ngIf="precio.errors?.minlength && precio.touched"
+                     class="alert alert-danger form-control-feadback"
+                     role="alert">
+                 <strong>Minimo {{ precio.errors.minlength.requiredLength }} caracteres</strong>
+               </div>
+
+        </div>
+
+        <div class="form-check mb-2 mr-sm-2 mb-sm-0">
+          <label class="form-check-label">
+            <input (change)="viewMoreRoom()" class="form-check-input" value="true" type="checkbox"> Agregar Varias Habitaciones
+          </label>
+        </div>
+        <br>
+
+        <div class="form-group" *ngIf="mostrar"
+             >
+          <label>Cantidad a Generar</label>
+            <input [(ngModel)]="habitacionesACrear"
+                   type="number" name="habitacionesACrear" min="0"
+                   class="form-control"  autocomplete="off"
+                   required minlength="1" >
+                 <br>
+                 <!-- <div *ngIf="habitacionesACrear.errors?.required && habitacionesACrear.touched"
+                      class="alert alert-danger form-control-feadback"
+                      role="alert">
+                  <strong>Este Campo es Requerido</strong>
+                </div>
+                <div *ngIf="habitacionesACrear.errors?.minlength && precio.touched"
+                     class="alert alert-danger form-control-feadback"
+                     role="alert">
+                 <strong>Minimo {{ habitacionesACrear.errors.minlength.requiredLength }} caracteres</strong>
+               </div> -->
+
+        </div>
+
+        <div class="form-group">
+          <button [disabled]="!forma.valid"
+                  type="submit"
+                  class="btn btn-outline-primary">
+            Guardar
+          </button>
+        </div>
+
+      </form>
+
+    </div>
+
+  </div>
+
+</div>

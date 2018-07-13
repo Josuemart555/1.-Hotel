@@ -1,0 +1,126 @@
+<div class="container main-container bodyInq">
+
+  <div class="d-flex justify-content-between">
+    <h2>Inquilino</h2>
+    <div class="d-flex justify-content-between">
+      <button class="btn btn-outline-danger"
+              type="button" [routerLink]="['/inquilinos']">
+        <i class="fas fa-ban" style="margin-right: 5px;"></i> Cancelar
+      </button>
+    </div>
+  </div>
+
+
+  <hr>
+
+  <div class="row">
+
+    <div class="col-md-5">
+
+      <form (ngSubmit)="guardarInquilino()" #forma="ngForm">
+
+        <div class="form-group"
+             [ngClass]="{ 'has-danger' : nombres.errors?.minlength || nombres.errors?.required && nombres.touched}">
+          <label class="col-2 col-form-label">Nombres</label>
+          <input [(ngModel)]="inquilino.nombres"
+                 type="text" name="nombres"
+                 class="form-control" pattern="^[a-zA-Z_-]+(?:\s+[a-zA-Z_-]+)*$"
+                 placeholder="Nombres" autocomplete="off"
+                 required minlength="3" #nombres="ngModel">
+                 <br *ngIf="nombres.errors?.required && nombres.touched || nombres.errors?.minlength">
+                 <div *ngIf="nombres.errors?.required && nombres.touched"
+                      class="alert alert-danger form-control-feadback"
+                      role="alert">
+                  <strong>Este Campo es Requerido</strong>
+                </div>
+                 <div *ngIf="nombres.errors?.minlength"
+                      class="alert alert-danger form-control-feadback"
+                      role="alert">
+                  <strong>Minimo {{ nombres.errors.minlength.requiredLength }} caracteres</strong>
+                </div>
+
+        </div>
+
+        <div class="form-group"
+             [ngClass]="{ 'has-danger' : apellidos.errors?.minlength || apellidos.errors?.required && apellidos.touched}">
+          <label class="col-2 col-form-label">Apellidos</label>
+          <input [(ngModel)]="inquilino.apellidos"
+                 type="text" name="apellidos"
+                 class="form-control" pattern="^[a-zA-Z_-]+(?:\s+[a-zA-Z_-]+)*$"
+                 placeholder="Apellidos" autocomplete="off"
+                 required minlength="3" #apellidos="ngModel">
+                 <br *ngIf="apellidos.errors?.required && apellidos.touched || apellidos.errors?.minlength">
+                 <div *ngIf="apellidos.errors?.required && apellidos.touched"
+                      class="alert alert-danger form-control-feadback"
+                      role="alert">
+                  <strong>Este Campo es Requerido</strong>
+                </div>
+                <div *ngIf="apellidos.errors?.minlength"
+                     class="alert alert-danger form-control-feadback"
+                     role="alert">
+                 <strong>Minimo {{ apellidos.errors.minlength.requiredLength }} caracteres</strong>
+               </div>
+
+        </div>
+
+        <div class="form-group"
+             [ngClass]="{ 'has-danger' : edad.errors?.minlength || edad.errors?.required && edad.touched}">
+          <label class="col-2 col-form-label">Edad</label>
+          <input [(ngModel)]="inquilino.edad"
+                 class="form-control" type="number"
+                 name="edad" placeholder="0" autocomplete="off"
+                 required #edad="ngModel">
+                 <br *ngIf="edad.errors?.required && edad.touched || edad.errors?.minlength">
+                 <div *ngIf="edad.errors?.required && edad.touched"
+                      class="alert alert-danger form-control-feadback"
+                      role="alert">
+                  <strong>Este Campo es Requerido</strong>
+                </div>
+                <div *ngIf="edad.errors?.minlength"
+                     class="alert alert-danger form-control-feadback"
+                     role="alert">
+                 <strong>Minimo {{ edad.errors.minlength.requiredLength }} caracteres</strong>
+               </div>
+        </div>
+
+        <div class="form-group">
+          <label class="col-6 col-form-label">Fecha Llegada</label>
+          <input class="form-control" type="date" [(ngModel)]="inquilino.fechaLlega" [min]="todayStr" name="fechaLlega">
+        </div>
+
+        <div class="form-group">
+          <label class="col-6 col-form-label">Fecha Salidad</label>
+          <input class="form-control" type="date" [(ngModel)]="inquilino.fechaSalida" name="fechaSalida">
+        </div>
+
+        <h2>Habitacion</h2>
+
+        <div class="form-group">
+          <label>Tipo Habitación</label>
+          <select (change)="mostrarNumeroCuarto()" class="form-control" [(ngModel)]="tipoHabitacion.id" name="id">
+            <option *ngFor="let tipoHabitacion1 of _tHS.listaTipoHabitacion" [value]="tipoHabitacion1.id">{{ tipoHabitacion1.nombre }}</option>
+          </select>
+        </div>
+
+        <div *ngIf="listaNumeroHabitacion.length > 0" class="form-group">
+          <label>Numero Habitación</label>
+          <select class="form-control" [(ngModel)]="numHa" name="numero">
+            <option type="number" *ngFor="let numero of listaNumeroHabitacion" [value]="numero">{{ numero }}</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <button [disabled]="!forma.valid"
+                  type="submit"
+                  class="btn btn-outline-primary">
+            Guardar
+          </button>
+        </div>
+
+      </form>
+
+    </div>
+
+  </div>
+
+</div>

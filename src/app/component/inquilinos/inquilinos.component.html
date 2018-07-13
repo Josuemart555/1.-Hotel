@@ -1,0 +1,104 @@
+<div class="container main-container">
+
+  <div class="d-flex justify-content-between">
+    <h1>Inquilinos</h1>
+    <div class="d-flex justify-content-between">
+      <button [routerLink]="['/inquilino', 'nuevo']"
+              type="button" style="margin-left: 10px;"
+              class="btn btn-outline-primary">
+        <i class="fas fa-plus"></i> Agregar
+      </button>
+    </div>
+  </div>
+  <hr>
+  <br>
+
+  <form>
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label">Buscador</label>
+      <div class="col-sm-6">
+        <input class="form-control mr-sm-2" autocomplete="off"
+               type="text" [(ngModel)]="termino" name="termino"
+               placeholder="Buscar" (keyup.enter)="buscar()">
+      </div>
+    </div>
+  </form>
+  <hr>
+  <br>
+
+  <div class="card-columns">
+    <div *ngFor="let inquilino of _iS.listaInquilinos; let i = index"  style="width: 20rem;">
+      <div class="card-block card">
+        <h5 class="card-title">{{ inquilino.nombres }} {{ inquilino.apellidos }}</h5>
+        <p class="card-text">Edad:  {{ inquilino.edad }}</p>
+        <p class="card-text">Fecha Llegada: {{ inquilino.fechaLlega }}</p>
+        <p class="card-text">Fecha Salida: {{ inquilino.fechaSalida }}</p>
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#exampleModal">
+          Ver Más
+        </button>
+        <br>
+        <br>
+        <button [routerLink]="['/inquilino', i]"
+                type="button"
+                class="btn btn-outline-primary">
+          Editar <i class="far fa-edit"></i>
+        </button>
+        <!-- Button trigger modal -->
+          <button (click)="setValor(i)" type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#exampleModal2">
+            Eliminar <i class="far fa-trash-alt"></i>
+          </button>
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Tipo Habitación: {{ inquilino.habitacion.tipoHabitacion }}</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <p>Opcion de Cama: {{ inquilino.habitacion.opcionesCama }}</p>
+                <p>Precio: {{ inquilino.habitacion.precio | currency: 'EUR' }}</p>
+                <p>No. Habitación: {{ inquilino.habitacion.numeroHabitacion }}</p>
+                <p>Usuario: {{ inquilino.usuario.username }}</p>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Cerrar</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Modal Eliminar -->
+          <div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel"><strong>Confirmación</strong></h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <p class="text-center">
+                    Esta Seguro que Quiere Borrar la habitación
+                  </p>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-outline-warning" data-dismiss="modal">
+                    Cancelar <i class="fas fa-ban"></i>
+                  </button>
+                  <button (click)="borrarInquilino()"
+                    type="button" class="btn btn-outline-danger" data-dismiss="modal">
+                    Aceptar <i class="far fa-trash-alt"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+      </div>
+    </div>
+  </div>
+
+</div>

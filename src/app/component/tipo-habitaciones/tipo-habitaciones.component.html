@@ -1,0 +1,62 @@
+<div class="container main-container">
+
+  <div class="d-flex justify-content-between">
+    <h1>Tipo Habitacones</h1>
+    <button (click)="irAgregrarTipoHabitacion()"
+      type="button" class="btn btn-outline-primary">
+      Agregar <i class="fas fa-plus"></i>
+    </button>
+  </div>
+  <br>
+  <br>
+
+  <table class="table">
+    <thead class="thead-inverse">
+      <tr>
+        <th>Nombre</th>
+        <th>Opciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let tipoHabitacion of _tHS.listaTipoHabitacion; let i = index">
+        <td>{{ tipoHabitacion.nombre }}</td>
+        <td class="text-right w120">
+          <button [routerLink]="['/tipo-habitacion', i]"
+                  type="button" class="btn btn-outline-success">
+            Editar <i class="far fa-edit"></i>
+          </button>
+          <!-- Button trigger modal -->
+          <button (click)="setValor(i)" type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#exampleModal">
+            Eliminar <i class="far fa-trash-alt"></i>
+          </button>
+          <!-- Modal -->
+          <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel"><strong>Confirmación</strong></h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <p class="text-center">
+                    Esta Seguro que Quiere Borrar el Tipo Habitación
+                  </p>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-outline-warning" data-dismiss="modal">Cancelar</button>
+                  <button (click)="borrarProducto()"
+                    type="button" class="btn btn-outline-danger" data-dismiss="modal">
+                    Aceptar <i class="far fa-trash-alt"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+</div>

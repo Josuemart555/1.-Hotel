@@ -1,0 +1,70 @@
+<div class="container">
+
+  <h1>Iniciar Sesión</h1>
+  <br>
+  <form (ngSubmit)="login()" #forma="ngForm">
+    <div class="form-group row"
+         [ngClass]="{ 'has-danger' : username.errors?.minlength || username.errors?.patter || username.errors?.required && username.touched}">
+      <label class="col-sm-2 col-form-label">
+        Nombre
+      </label>
+      <div class="col-sm-6">
+        <input type="text" [(ngModel)]="usuario.username"
+               class="form-control" name="username"
+               placeholder="Nombre" autocomplete="off"
+               required minlength="5" #username="ngModel">
+               <br>
+               <div *ngIf="username.errors?.required && username.touched"
+               class="alert alert-danger form-control-feadback"
+               role="alert">
+               <strong>Este Campo es Requerido</strong>
+             </div>
+             <div *ngIf="username.errors?.minlength"
+             class="alert alert-danger form-control-feadback"
+             role="alert">
+             <strong>Minimo {{ username.errors.minlength.requiredLength }} caracteres</strong>
+           </div>
+      </div>
+    </div>
+    <div class="form-group row"
+         [ngClass]="{ 'has-danger' : password.errors?.minlength || password.errors?.patter || password.errors?.required && password.touched}">
+      <label class="col-sm-2 col-form-label">
+        Contraseña
+      </label>
+      <div class="col-sm-6">
+        <div class="input-group">
+          <input type="{{ type }}" [(ngModel)]="usuario.password"
+          class="form-control" name="password"
+          placeholder="Contraseña" autocomplete="off"
+          required minlength="5" #password="ngModel">
+          <span class="input-group-addon" *ngIf="mostrarPas" (click)="mostrarPassword()">
+            <!-- <i class="material-icons">remove_red_eye</i> -->
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-eye"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+          </span>
+          <span class="input-group-addon" *ngIf="!mostrarPas" (click)="mostrarPassword()">
+            <!-- <i class="far fa-eye-slash"></i> -->
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-eye-off"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line></svg>
+          </span>
+        </div>
+               <br>
+               <div *ngIf="password.errors?.required && password.touched"
+                   class="alert alert-danger form-control-feadback"
+                   role="alert">
+                   <strong>Este Campo es Requerido</strong>
+                 </div>
+                 <div *ngIf="password.errors?.minlength"
+                 class="alert alert-danger form-control-feadback"
+                 role="alert">
+                 <strong>Minimo {{ password.errors.minlength.requiredLength }} caracteres</strong>
+               </div>
+      </div>
+    </div>
+    <div class="form-group row">
+      <div class="offset-sm-2 col-sm-10">
+        <button type="submit" class="btn btn-outline-primary">
+          Iniciar Sesión
+        </button>
+      </div>
+    </div>
+  </form>
+</div>
